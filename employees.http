@@ -1,17 +1,44 @@
 @port=3000
 @host=http://localhost:{{port}}
 
-### GET /
+### Root endpoint
 GET {{host}}
 
 ### Get all employees
 GET {{host}}/employees
 
-### Get specific employee
+### Get a specific employee (valid ID)
 GET {{host}}/employees/2
 
-### Get nonexistent employee
+### Get a nonexistent employee
 GET {{host}}/employees/123
 
-### Get random employee
+### Get a random employee
 GET {{host}}/employees/random
+
+### Add a new employee (valid request)
+POST {{host}}/employees
+Content-Type: application/json
+
+{
+    "name": "John Doe"
+}
+
+### Add a new employee (invalid request - missing name)
+POST {{host}}/employees
+Content-Type: application/json
+
+{
+    "name": ""
+}
+
+### Add a new employee (invalid request - non-string name)
+POST {{host}}/employees
+Content-Type: application/json
+
+{
+    "name": 1234
+}
+
+### Verify the new employee was added
+GET {{host}}/employees
